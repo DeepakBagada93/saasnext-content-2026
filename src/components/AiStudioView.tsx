@@ -140,39 +140,39 @@ export default function AiStudioView() {
     <div className="flex h-screen bg-background text-on-background overflow-hidden font-body">
       <Sidebar />
 
-      <main className="flex-1 ml-64 flex flex-col min-w-0 bg-background relative h-full">
+      <main className="flex-1 ml-0 lg:ml-64 pt-16 lg:pt-0 flex flex-col min-w-0 bg-background relative h-full">
         {/* Top Bar */}
-        <header className="h-16 flex items-center justify-between px-8 border-b border-outline-variant/30 bg-background/80 backdrop-blur-md z-20 sticky top-0">
-          <div className="flex items-center gap-4">
-            <FolderOpen className="w-5 h-5 text-on-surface-variant" />
-            <div className="h-4 w-px bg-outline-variant"></div>
-            <h2 className="font-display text-lg font-bold text-on-surface">
+        <header className="h-16 flex items-center justify-between px-4 sm:px-8 border-b border-outline-variant/30 bg-background/80 backdrop-blur-md z-20 sticky top-0">
+          <div className="flex items-center gap-2 sm:gap-4 truncate">
+            <FolderOpen className="w-4 h-4 sm:w-5 sm:h-5 text-on-surface-variant shrink-0" />
+            <div className="h-4 w-px bg-outline-variant hidden sm:block"></div>
+            <h2 className="font-display text-sm sm:text-lg font-bold text-on-surface truncate">
               {articleContent.title}
             </h2>
-            <div className="flex items-center gap-2 px-3 py-1 bg-surface-container-high rounded-full ml-4">
+            <div className="hidden md:flex items-center gap-2 px-3 py-1 bg-surface-container-high rounded-full ml-2 shrink-0">
               <div
                 className={`w-2 h-2 rounded-full ${
                   isGenerating ? "bg-primary animate-ping" : "bg-tertiary"
                 }`}
               ></div>
               <span className="text-xs font-semibold text-primary">
-                {isGenerating ? "OpenRouter AI Generating..." : "OpenRouter API Ready"}
+                {isGenerating ? "AI Generating..." : "API Ready"}
               </span>
             </div>
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3 shrink-0">
             <button
               onClick={() => setShowShareModal(true)}
-              className="flex items-center gap-2 px-4 py-2 border border-outline-variant rounded-xl text-xs font-semibold text-on-surface-variant hover:bg-surface-container-low transition-colors"
+              className="flex items-center gap-1.5 px-3 sm:px-4 py-2 border border-outline-variant rounded-xl text-xs font-semibold text-on-surface-variant hover:bg-surface-container-low transition-colors"
             >
-              <Share2 className="w-4 h-4" />
-              <span>Share</span>
+              <Share2 className="w-3.5 h-3.5" />
+              <span className="hidden sm:inline">Share</span>
             </button>
             <button
               onClick={() => setShowExportModal(true)}
-              className="flex items-center gap-2 px-4 py-2 bg-primary text-on-primary rounded-xl text-xs font-semibold hover:opacity-90 transition-opacity shadow-xs"
+              className="flex items-center gap-1.5 px-3 sm:px-4 py-2 bg-primary text-on-primary rounded-xl text-xs font-semibold hover:opacity-90 transition-opacity shadow-xs"
             >
-              <Download className="w-4 h-4" />
+              <Download className="w-3.5 h-3.5" />
               <span>Export</span>
             </button>
           </div>
@@ -213,33 +213,19 @@ export default function AiStudioView() {
                 <span>Inject Context</span>
               </button>
             </div>
-
-            <div className="mt-8 p-4 bg-tertiary-fixed rounded-xl border border-tertiary-fixed-dim">
-              <div className="flex items-center gap-2 mb-1.5">
-                <span className="material-symbols-outlined text-on-tertiary-fixed-variant text-[18px]">
-                  info
-                </span>
-                <span className="text-xs font-bold text-on-tertiary-fixed">Live API Connected</span>
-              </div>
-              <p className="text-xs text-on-tertiary-fixed-variant/90 leading-relaxed">
-                Connected to OpenRouter & Parallel Search API for real-time intelligence.
-              </p>
-            </div>
           </aside>
 
           {/* Center Editor Canvas */}
-          <section className="flex-1 overflow-y-auto bg-surface flex justify-center p-8 lg:p-14 custom-scrollbar">
-            <div className="w-full max-w-3xl space-y-8">
+          <section className="flex-1 overflow-y-auto bg-surface flex justify-center p-4 sm:p-8 lg:p-14 custom-scrollbar">
+            <div className="w-full max-w-3xl space-y-6 sm:space-y-8">
               <div className="space-y-3 border-b border-outline-variant/30 pb-6">
-                <h1 className="font-display text-4xl font-bold text-on-background">
+                <h1 className="font-display text-2xl sm:text-4xl font-bold text-on-background">
                   {articleContent.title}
                 </h1>
-                <div className="flex items-center gap-4 text-on-surface-variant text-xs font-medium">
+                <div className="flex flex-wrap items-center gap-2 sm:gap-4 text-on-surface-variant text-xs font-medium">
                   <span>Word count: {articleContent.wordCount}</span>
                   <div className="w-1 h-1 rounded-full bg-outline-variant"></div>
                   <span>Reading time: {articleContent.readingTime} min</span>
-                  <div className="w-1 h-1 rounded-full bg-outline-variant"></div>
-                  <span className="text-tertiary font-semibold">Synced with OpenRouter</span>
                 </div>
               </div>
 
@@ -254,25 +240,68 @@ export default function AiStudioView() {
                       wordCount: e.target.value.split(/\s+/).length,
                     }))
                   }
-                  className="w-full min-h-[450px] bg-transparent border-none focus:outline-none font-body text-base leading-relaxed text-on-surface resize-y"
+                  className="w-full min-h-[350px] sm:min-h-[450px] bg-transparent border-none focus:outline-none font-body text-sm sm:text-base leading-relaxed text-on-surface resize-y"
                 />
-
-                <div className="my-6 rounded-2xl overflow-hidden border border-outline-variant shadow-sm">
-                  <img
-                    src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=1200&q=80"
-                    alt="Solitude Pavilion"
-                    className="w-full h-80 object-cover"
-                  />
-                  <div className="p-3 bg-surface-container-low text-xs text-on-surface-variant italic">
-                    Visual Reference: Solitude Pavilion, Mojave High Desert (Concept 04)
-                  </div>
-                </div>
               </article>
-              <div className="h-20"></div>
+
+              {/* Mobile Prompt Actions Bar */}
+              <div className="lg:hidden border-t border-outline-variant/30 pt-4 pb-20 space-y-4">
+                <h3 className="text-xs font-bold text-on-surface-variant uppercase tracking-wider">
+                  Quick AI Actions
+                </h3>
+                <div className="grid grid-cols-2 gap-2">
+                  <button
+                    onClick={() => handleAction("Summarize", "Summarize core points")}
+                    className="p-3 rounded-xl border border-outline-variant bg-surface-container-low text-xs font-bold text-on-surface flex items-center justify-between"
+                  >
+                    <span>Summarize</span>
+                    <FileText className="w-3.5 h-3.5 text-primary" />
+                  </button>
+                  <button
+                    onClick={() => handleAction("Improve EEAT", "Improve authority")}
+                    className="p-3 rounded-xl border border-outline-variant bg-surface-container-low text-xs font-bold text-on-surface flex items-center justify-between"
+                  >
+                    <span>Improve EEAT</span>
+                    <Star className="w-3.5 h-3.5 text-primary" />
+                  </button>
+                  <button
+                    onClick={() => handleAction("Generate Hooks", "Social hooks")}
+                    className="p-3 rounded-xl border border-outline-variant bg-surface-container-low text-xs font-bold text-on-surface flex items-center justify-between"
+                  >
+                    <span>Generate Hooks</span>
+                    <Anchor className="w-3.5 h-3.5 text-primary" />
+                  </button>
+                  <button
+                    onClick={() => handleAction("Fact Check", "Fact check claims")}
+                    className="p-3 rounded-xl border border-outline-variant bg-surface-container-low text-xs font-bold text-on-surface flex items-center justify-between"
+                  >
+                    <span>Fact Check</span>
+                    <CheckCheck className="w-3.5 h-3.5 text-primary" />
+                  </button>
+                </div>
+
+                <form onSubmit={handleCustomPrompt} className="relative mt-3">
+                  <textarea
+                    value={promptText}
+                    onChange={(e) => setPromptText(e.target.value)}
+                    placeholder="Ask OpenRouter AI..."
+                    className="w-full bg-surface-container-high border-none rounded-xl p-3 pr-10 text-xs focus:ring-2 focus:ring-primary h-20 resize-none focus:outline-none"
+                  />
+                  <button
+                    type="submit"
+                    disabled={!promptText.trim() || isGenerating}
+                    className="absolute right-2 bottom-2 p-2 bg-primary text-on-primary rounded-lg"
+                  >
+                    <Send className="w-3.5 h-3.5" />
+                  </button>
+                </form>
+              </div>
+
+              <div className="h-10"></div>
             </div>
           </section>
 
-          {/* Right Panel: Focused Actions */}
+          {/* Right Panel: Focused Actions (Desktop) */}
           <aside className="w-80 border-l border-outline-variant/30 bg-surface-container-lowest p-6 flex flex-col justify-between hidden lg:flex">
             <div>
               <h3 className="text-xs font-bold text-on-surface-variant uppercase tracking-widest mb-4">
@@ -358,10 +387,10 @@ export default function AiStudioView() {
 
       {/* Floating Action Feedback (Toast) */}
       {toastMessage && (
-        <div className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 animate-in fade-in slide-in-from-bottom-4 duration-300">
-          <div className="bg-inverse-surface text-inverse-on-surface px-6 py-3 rounded-full flex items-center gap-3 shadow-2xl border border-outline/20">
-            <Wand2 className="w-4 h-4 text-primary-fixed-dim animate-spin" />
-            <span className="text-xs font-semibold">{toastMessage}</span>
+        <div className="fixed bottom-6 sm:bottom-8 left-1/2 -translate-x-1/2 z-50 animate-in fade-in slide-in-from-bottom-4 duration-300 max-w-sm w-full px-4">
+          <div className="bg-inverse-surface text-inverse-on-surface px-5 py-3 rounded-full flex items-center justify-center gap-3 shadow-2xl border border-outline/20 text-center">
+            <Wand2 className="w-4 h-4 text-primary-fixed-dim animate-spin shrink-0" />
+            <span className="text-xs font-semibold truncate">{toastMessage}</span>
           </div>
         </div>
       )}

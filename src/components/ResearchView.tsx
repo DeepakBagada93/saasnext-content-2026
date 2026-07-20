@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Sidebar from "@/components/Sidebar";
-import { Search, BookOpen, Plus, ExternalLink, Bookmark, Filter, FileText } from "lucide-react";
+import { Search, Plus, ExternalLink } from "lucide-react";
 
 export default function ResearchView() {
   const [search, setSearch] = useState("");
@@ -42,17 +42,6 @@ export default function ResearchView() {
       readTime: "8 min read",
       saved: true,
     },
-    {
-      id: "4",
-      title: "Kinetic Typography in Editorial Video Essays",
-      source: "Motion Design Journal",
-      date: "Nov 04, 2026",
-      tag: "Media",
-      snippet:
-        "How high-contrast serif typography paired with subtle micro-animations increases video retention rates by 38%.",
-      readTime: "5 min read",
-      saved: false,
-    },
   ];
 
   const filtered = articles.filter((a) => {
@@ -64,23 +53,23 @@ export default function ResearchView() {
   });
 
   return (
-    <div className="flex min-h-screen bg-background text-on-background">
+    <div className="flex min-h-screen bg-background text-on-background font-body">
       <Sidebar />
 
-      <main className="flex-1 ml-64 p-8 md:p-12 pb-24 min-h-screen">
+      <main className="flex-1 ml-0 lg:ml-64 pt-20 lg:pt-12 p-4 sm:p-8 md:p-12 pb-24 min-h-screen">
         {/* Header */}
-        <header className="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
+        <header className="flex flex-col sm:flex-row sm:items-center justify-between mb-8 gap-4">
           <div>
-            <h1 className="font-display text-3xl font-bold text-on-surface">
+            <h1 className="font-display text-2xl sm:text-3xl font-bold text-on-surface">
               Research Repository
             </h1>
-            <p className="text-sm text-on-surface-variant mt-1">
+            <p className="text-xs sm:text-sm text-on-surface-variant mt-1">
               Curated articles, citations, and knowledge threads powering your Brain Graph.
             </p>
           </div>
           <button
             onClick={() => alert("Add Research Source dialog initialized!")}
-            className="flex items-center gap-2 px-5 py-2.5 bg-primary text-on-primary rounded-xl font-semibold text-xs hover:opacity-90 transition-all shadow-xs"
+            className="flex items-center justify-center gap-2 px-5 py-2.5 bg-primary text-on-primary rounded-xl font-semibold text-xs hover:opacity-90 transition-all shadow-xs"
           >
             <Plus className="w-4 h-4" />
             <span>Add Research Source</span>
@@ -99,12 +88,12 @@ export default function ResearchView() {
               className="w-full pl-11 pr-4 py-2.5 bg-surface-container border border-outline-variant/60 rounded-xl text-sm focus:ring-2 focus:ring-primary focus:outline-none"
             />
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 overflow-x-auto pb-1 custom-scrollbar">
             {["All", "Design Strategy", "Architecture", "Psychology", "Media"].map((t) => (
               <button
                 key={t}
                 onClick={() => setFilterTag(t)}
-                className={`px-3.5 py-2 rounded-xl text-xs font-semibold border transition-all ${
+                className={`px-3.5 py-2 rounded-xl text-xs font-semibold border transition-all shrink-0 ${
                   filterTag === t
                     ? "bg-primary text-on-primary border-primary"
                     : "border-outline-variant bg-surface-container text-on-surface-variant hover:bg-surface-container-high"

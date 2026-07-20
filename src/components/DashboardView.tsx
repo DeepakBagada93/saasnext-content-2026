@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import Sidebar from "@/components/Sidebar";
 import { supabase } from "@/lib/supabase";
-import { Search, Edit3, ArrowRight, Check, X, Filter, Loader2, Plus, FolderPlus, BookOpen } from "lucide-react";
+import { Search, Sparkles, Edit3, ArrowRight, Check, X, Filter, Loader2, Plus, FolderPlus, BookOpen } from "lucide-react";
 
 interface ProjectItem {
   id: string;
@@ -132,7 +132,7 @@ export default function DashboardView() {
     <div className="flex min-h-screen bg-background text-on-background font-body">
       <Sidebar />
 
-      <main className="flex-1 ml-64 p-8 md:p-12 pb-24 min-h-screen">
+      <main className="flex-1 ml-0 lg:ml-64 pt-20 lg:pt-12 p-4 sm:p-6 md:p-12 pb-24 min-h-screen">
         {/* Header Section */}
         <header className="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
           <nav className="flex items-center text-xs font-semibold text-on-surface-variant gap-2 uppercase tracking-wider">
@@ -154,24 +154,24 @@ export default function DashboardView() {
 
         {/* Quick Actions Row */}
         <section className="mb-10">
-          <div className="flex flex-wrap gap-4">
+          <div className="flex flex-wrap gap-3">
             <Link
               href="/research"
-              className="flex items-center gap-2 px-5 py-3 bg-surface-container-highest rounded-xl text-primary font-semibold text-sm hover:bg-surface-container-lowest transition-colors border border-outline-variant/60 shadow-xs"
+              className="flex-1 sm:flex-initial flex items-center justify-center gap-2 px-5 py-3 bg-surface-container-highest rounded-xl text-primary font-semibold text-xs sm:text-sm hover:bg-surface-container-lowest transition-colors border border-outline-variant/60 shadow-xs"
             >
               <span className="material-symbols-outlined text-[20px]">biotech</span>
               <span>New Research</span>
             </Link>
             <Link
               href="/moodboard"
-              className="flex items-center gap-2 px-5 py-3 bg-surface-container-highest rounded-xl text-primary font-semibold text-sm hover:bg-surface-container-lowest transition-colors border border-outline-variant/60 shadow-xs"
+              className="flex-1 sm:flex-initial flex items-center justify-center gap-2 px-5 py-3 bg-surface-container-highest rounded-xl text-primary font-semibold text-xs sm:text-sm hover:bg-surface-container-lowest transition-colors border border-outline-variant/60 shadow-xs"
             >
               <span className="material-symbols-outlined text-[20px]">palette</span>
               <span>New Moodboard</span>
             </Link>
             <Link
               href="/studio"
-              className="flex items-center gap-2 px-5 py-3 bg-primary text-on-primary rounded-xl font-semibold text-sm hover:opacity-90 transition-all shadow-xs"
+              className="w-full sm:w-auto flex items-center justify-center gap-2 px-5 py-3 bg-primary text-on-primary rounded-xl font-semibold text-xs sm:text-sm hover:opacity-90 transition-all shadow-xs"
             >
               <span className="material-symbols-outlined text-[20px]">smart_toy</span>
               <span>Open AI Studio</span>
@@ -185,17 +185,17 @@ export default function DashboardView() {
             <span className="text-sm font-semibold">Loading Workspace from Supabase...</span>
           </div>
         ) : (
-          <div className="grid grid-cols-12 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
             {/* Left Column: Projects & Active Research (8 Cols) */}
-            <div className="col-span-12 lg:col-span-8 flex flex-col gap-10">
+            <div className="col-span-1 lg:col-span-8 flex flex-col gap-10">
               {/* Recent Projects */}
               <section>
-                <div className="flex items-center justify-between mb-4">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
                   <h2 className="font-display text-2xl font-bold text-on-surface">
                     Workspace Projects ({filteredProjects.length})
                   </h2>
-                  <div className="flex items-center gap-3">
-                    <div className="flex items-center gap-1 text-xs text-on-surface-variant bg-surface-container-high px-3 py-1 rounded-lg">
+                  <div className="flex items-center gap-2 overflow-x-auto pb-1 custom-scrollbar">
+                    <div className="flex items-center gap-1 text-xs text-on-surface-variant bg-surface-container-high px-3 py-1 rounded-lg shrink-0">
                       <Filter className="w-3 h-3" />
                       <span>Filter:</span>
                     </div>
@@ -203,7 +203,7 @@ export default function DashboardView() {
                       <button
                         key={cat}
                         onClick={() => setSelectedCategory(cat)}
-                        className={`text-xs font-semibold px-3 py-1 rounded-lg transition-colors ${
+                        className={`text-xs font-semibold px-3 py-1 rounded-lg transition-colors shrink-0 ${
                           selectedCategory === cat
                             ? "bg-primary text-on-primary"
                             : "text-on-surface-variant hover:text-primary"
@@ -216,7 +216,7 @@ export default function DashboardView() {
                 </div>
 
                 {filteredProjects.length === 0 ? (
-                  <div className="desert-stone-card rounded-2xl p-12 text-center flex flex-col items-center justify-center border-dashed">
+                  <div className="desert-stone-card rounded-2xl p-8 sm:p-12 text-center flex flex-col items-center justify-center border-dashed">
                     <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center text-primary mb-4">
                       <FolderPlus className="w-7 h-7" />
                     </div>
@@ -228,7 +228,7 @@ export default function DashboardView() {
                     </p>
                   </div>
                 ) : (
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                     {filteredProjects.map((project) => (
                       <Link
                         key={project.id}
@@ -302,7 +302,7 @@ export default function DashboardView() {
                     {researchItems.map((item) => (
                       <div
                         key={item.id}
-                        className="min-w-[280px] desert-stone-card p-6 rounded-xl relative overflow-hidden flex flex-col justify-between"
+                        className="min-w-[260px] sm:min-w-[280px] desert-stone-card p-6 rounded-xl relative overflow-hidden flex flex-col justify-between shrink-0"
                       >
                         <div>
                           <p className="text-xs font-bold text-primary mb-2">{item.date}</p>
@@ -326,7 +326,7 @@ export default function DashboardView() {
             </div>
 
             {/* Right Column: Memory & AI Pulse (4 Cols) */}
-            <div className="col-span-12 lg:col-span-4 flex flex-col gap-8">
+            <div className="col-span-1 lg:col-span-4 flex flex-col gap-8">
               {/* Brain Memory */}
               <section>
                 <div className="mb-4 flex items-center justify-between">
@@ -459,7 +459,7 @@ export default function DashboardView() {
       )}
 
       {/* Persistent Bottom Status Bar */}
-      <footer className="fixed bottom-0 left-64 right-0 bg-surface-container-lowest/90 backdrop-blur-md px-8 py-3 flex items-center justify-between border-t border-outline-variant/30 text-xs text-on-surface-variant z-40">
+      <footer className="fixed bottom-0 left-0 lg:left-64 right-0 bg-surface-container-lowest/90 backdrop-blur-md px-4 sm:px-8 py-3 flex items-center justify-between border-t border-outline-variant/30 text-xs text-on-surface-variant z-40">
         <div className="flex items-center gap-6">
           <span>&copy; 2026 Content Brain AI</span>
           <div className="hidden md:flex gap-4 opacity-70">
@@ -476,7 +476,7 @@ export default function DashboardView() {
         </div>
         <div className="flex items-center gap-2">
           <span className="w-2 h-2 bg-tertiary rounded-full animate-pulse"></span>
-          <span className="font-semibold text-tertiary">Supabase DB Live Connected</span>
+          <span className="font-semibold text-tertiary">Supabase DB Live</span>
         </div>
       </footer>
     </div>

@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import { supabase } from "@/lib/supabase";
-import { Plus, Settings, HelpCircle, X, LogOut, LogIn, Loader2 } from "lucide-react";
+import { Plus, Settings, HelpCircle, X, LogOut, LogIn, Loader2, Menu } from "lucide-react";
 
 interface SidebarProps {
   onNewProject?: () => void;
@@ -13,6 +13,7 @@ interface SidebarProps {
 export default function Sidebar({ onNewProject }: SidebarProps) {
   const pathname = usePathname();
   const router = useRouter();
+  const [mobileOpen, setMobileOpen] = useState(false);
   const [showNewModal, setShowNewModal] = useState(false);
   const [projectName, setProjectName] = useState("");
   const [projectCategory, setProjectCategory] = useState("Marketing");
@@ -32,6 +33,11 @@ export default function Sidebar({ onNewProject }: SidebarProps) {
 
     return () => subscription.unsubscribe();
   }, []);
+
+  // Close mobile drawer on route change
+  useEffect(() => {
+    setMobileOpen(false);
+  }, [pathname]);
 
   const handleCreateProject = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -83,9 +89,36 @@ export default function Sidebar({ onNewProject }: SidebarProps) {
 
   return (
     <>
-      <aside className="fixed left-0 top-0 h-screen w-64 bg-surface-container-low border-r border-outline-variant flex flex-col py-6 z-50">
+      {/* Mobile Top Header Toggle */}
+      <div className="lg:hidden fixed top-0 left-0 right-0 h-16 bg-surface-container-lowest/90 backdrop-blur-md border-b border-outline-variant/30 flex items-center justify-between px-4 z-40">
+        <Link href="/" className="font-display text-xl font-bold text-primary">
+          Content Brain
+        </Link>
+        <button
+          onClick={() => setMobileOpen(!mobileOpen)}
+          className="p-2 text-on-surface-variant hover:text-on-surface rounded-xl bg-surface-container hover:bg-surface-container-high transition-colors"
+          aria-label="Toggle navigation menu"
+        >
+          {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+        </button>
+      </div>
+
+      {/* Mobile Backdrop */}
+      {mobileOpen && (
+        <div
+          onClick={() => setMobileOpen(false)}
+          className="lg:hidden fixed inset-0 z-45 bg-black/40 backdrop-blur-xs transition-opacity"
+        />
+      )}
+
+      {/* Sidebar Drawer */}
+      <aside
+        className={`fixed left-0 top-0 h-screen w-64 bg-surface-container-low border-r border-outline-variant flex flex-col py-6 z-50 transition-transform duration-300 ${
+          mobileOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
+        }`}
+      >
         {/* Brand Header */}
-        <div className="px-6 mb-8">
+        <div className="px-6 mb-8 flex items-center justify-between">
           <Link href="/" className="group block">
             <h1 className="font-display text-2xl font-bold text-primary tracking-tight group-hover:opacity-90 transition-opacity">
               Content Brain
@@ -94,6 +127,12 @@ export default function Sidebar({ onNewProject }: SidebarProps) {
               Pro Workspace
             </p>
           </Link>
+          <button
+            onClick={() => setMobileOpen(false)}
+            className="lg:hidden text-on-surface-variant hover:text-on-surface p-1"
+          >
+            <X className="w-5 h-5" />
+          </button>
         </div>
 
         {/* New Project CTA */}

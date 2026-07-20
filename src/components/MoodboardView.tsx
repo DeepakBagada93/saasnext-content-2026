@@ -94,8 +94,8 @@ export default function MoodboardView() {
     e.preventDefault();
     if (!newTitle.trim()) return;
 
-    const newX = Math.floor(Math.random() * 300) + 120;
-    const newY = Math.floor(Math.random() * 300) + 120;
+    const newX = Math.floor(Math.random() * 200) + 40;
+    const newY = Math.floor(Math.random() * 200) + 100;
 
     const insertPayload = {
       type: newType,
@@ -148,19 +148,20 @@ export default function MoodboardView() {
     <div className="flex h-screen text-on-surface bg-background overflow-hidden font-body">
       <Sidebar />
 
-      <main className="flex-1 ml-64 relative overflow-hidden h-full canvas-grid">
+      <main className="flex-1 ml-0 lg:ml-64 pt-16 lg:pt-0 relative overflow-hidden h-full canvas-grid">
         {/* Floating Canvas Toolbar */}
-        <div className="absolute top-6 left-6 z-30 flex items-center gap-3 bg-surface-container-lowest/90 backdrop-blur-md px-5 py-2.5 rounded-2xl border border-outline-variant/60 shadow-md">
-          <div className="flex items-center gap-2 text-primary font-display font-bold text-base">
-            <Layers className="w-5 h-5" />
-            <span>Workspace Moodboard Canvas</span>
+        <div className="absolute top-20 lg:top-6 left-4 sm:left-6 z-30 flex items-center gap-2 sm:gap-3 bg-surface-container-lowest/90 backdrop-blur-md px-4 py-2 rounded-2xl border border-outline-variant/60 shadow-md">
+          <div className="flex items-center gap-2 text-primary font-display font-bold text-xs sm:text-base">
+            <Layers className="w-4 h-4 sm:w-5 sm:h-5" />
+            <span className="hidden sm:inline">Workspace Moodboard Canvas</span>
+            <span className="sm:hidden">Moodboard</span>
           </div>
           <div className="h-4 w-px bg-outline-variant/60"></div>
           <button
             onClick={() => setShowAddModal(true)}
-            className="flex items-center gap-1.5 px-3.5 py-1.5 bg-primary text-on-primary rounded-xl text-xs font-bold hover:opacity-90 transition-opacity shadow-xs"
+            className="flex items-center gap-1.5 px-3 py-1.5 bg-primary text-on-primary rounded-xl text-xs font-bold hover:opacity-90 transition-opacity shadow-xs"
           >
-            <Plus className="w-4 h-4" />
+            <Plus className="w-3.5 h-3.5" />
             <span>Add Card</span>
           </button>
         </div>
@@ -169,7 +170,7 @@ export default function MoodboardView() {
         {loading ? (
           <div className="flex items-center justify-center h-full text-primary gap-3">
             <Loader2 className="w-6 h-6 animate-spin" />
-            <span className="text-sm font-semibold">Loading Moodboard from Supabase...</span>
+            <span className="text-sm font-semibold">Loading Moodboard...</span>
           </div>
         ) : (
           <>
@@ -189,14 +190,14 @@ export default function MoodboardView() {
 
             {/* Canvas Items */}
             {cards.length === 0 ? (
-              <div className="flex flex-col items-center justify-center h-full p-12 text-center">
-                <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center text-primary mb-4">
-                  <ImageIcon className="w-8 h-8" />
+              <div className="flex flex-col items-center justify-center h-full p-6 sm:p-12 text-center">
+                <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-primary/10 flex items-center justify-center text-primary mb-4">
+                  <ImageIcon className="w-7 h-7 sm:w-8 sm:h-8" />
                 </div>
-                <h3 className="font-display text-2xl font-bold text-on-surface mb-2">
+                <h3 className="font-display text-xl sm:text-2xl font-bold text-on-surface mb-2">
                   Moodboard Canvas is Empty
                 </h3>
-                <p className="text-sm text-on-surface-variant max-w-md mb-6 leading-relaxed">
+                <p className="text-xs sm:text-sm text-on-surface-variant max-w-md mb-6 leading-relaxed">
                   Start collecting research citations, brand colors, images, and visual notes directly into Supabase.
                 </p>
                 <button
@@ -208,14 +209,14 @@ export default function MoodboardView() {
                 </button>
               </div>
             ) : (
-              <div className="relative w-full h-full overflow-auto p-12 custom-scrollbar">
+              <div className="relative w-full h-full overflow-auto p-6 sm:p-12 pt-32 lg:pt-24 custom-scrollbar">
                 {cards.map((card) => {
                   if (card.type === "research") {
                     return (
                       <div
                         key={card.id}
                         style={{ left: card.x, top: card.y }}
-                        className="absolute w-80 p-6 bg-surface-container-lowest border border-outline-variant rounded-xl shadow-sm hover:shadow-md transition-all cursor-grab active:cursor-grabbing group z-10"
+                        className="absolute w-72 sm:w-80 p-5 sm:p-6 bg-surface-container-lowest border border-outline-variant rounded-xl shadow-sm hover:shadow-md transition-all cursor-grab active:cursor-grabbing group z-10"
                       >
                         <div className="flex items-center gap-2 mb-3 text-tertiary">
                           <BookOpen className="w-4 h-4" />
@@ -223,7 +224,7 @@ export default function MoodboardView() {
                             {card.title}
                           </span>
                         </div>
-                        <p className="font-body text-sm text-on-surface mb-4 italic leading-relaxed">
+                        <p className="font-body text-xs sm:text-sm text-on-surface mb-4 italic leading-relaxed">
                           {card.content}
                         </p>
                         <div className="flex justify-between items-center text-xs text-on-surface-variant font-medium">
@@ -239,7 +240,7 @@ export default function MoodboardView() {
                       <div
                         key={card.id}
                         style={{ left: card.x, top: card.y }}
-                        className="absolute w-80 group cursor-grab active:cursor-grabbing z-10"
+                        className="absolute w-72 sm:w-80 group cursor-grab active:cursor-grabbing z-10"
                       >
                         <div className="aspect-[4/3] bg-surface-container-high rounded-xl overflow-hidden border border-outline-variant/60 shadow-md group-hover:shadow-lg transition-all">
                           <img
@@ -269,7 +270,7 @@ export default function MoodboardView() {
                       <div
                         key={card.id}
                         style={{ left: card.x, top: card.y }}
-                        className="absolute w-64 p-6 bg-surface-container border border-outline-variant rounded-lg -rotate-1 shadow-md hover:rotate-0 transition-transform cursor-grab active:cursor-grabbing z-10"
+                        className="absolute w-60 sm:w-64 p-5 sm:p-6 bg-surface-container border border-outline-variant rounded-lg -rotate-1 shadow-md hover:rotate-0 transition-transform cursor-grab active:cursor-grabbing z-10"
                       >
                         <div className="flex items-center gap-2 mb-2">
                           <div className="w-2.5 h-2.5 rounded-full bg-primary/60"></div>
@@ -277,7 +278,7 @@ export default function MoodboardView() {
                             {card.title}
                           </span>
                         </div>
-                        <p className="font-handwriting text-xl leading-tight text-on-surface">
+                        <p className="font-handwriting text-lg sm:text-xl leading-tight text-on-surface">
                           {card.content}
                         </p>
                       </div>
@@ -289,13 +290,13 @@ export default function MoodboardView() {
                       <div
                         key={card.id}
                         style={{ left: card.x, top: card.y }}
-                        className="absolute w-96 bg-primary text-on-primary p-7 rounded-2xl shadow-xl z-20 cursor-grab active:cursor-grabbing"
+                        className="absolute w-80 sm:w-96 bg-primary text-on-primary p-6 sm:p-7 rounded-2xl shadow-xl z-20 cursor-grab active:cursor-grabbing"
                       >
                         <div className="flex items-center gap-2.5 mb-3">
                           <Brain className="w-6 h-6" />
                           <h3 className="font-display text-lg font-bold">AI Synthesis</h3>
                         </div>
-                        <p className="text-sm opacity-90 leading-relaxed mb-5">
+                        <p className="text-xs sm:text-sm opacity-90 leading-relaxed mb-5">
                           {card.content}
                         </p>
                       </div>
@@ -307,7 +308,7 @@ export default function MoodboardView() {
                       <div
                         key={card.id}
                         style={{ left: card.x, top: card.y }}
-                        className="absolute w-72 p-5 bg-surface-container-lowest border border-outline-variant rounded-xl shadow-sm z-10 cursor-grab active:cursor-grabbing"
+                        className="absolute w-64 sm:w-72 p-5 bg-surface-container-lowest border border-outline-variant rounded-xl shadow-sm z-10 cursor-grab active:cursor-grabbing"
                       >
                         <div className="flex items-center gap-2 mb-3 text-primary">
                           <Palette className="w-4 h-4" />

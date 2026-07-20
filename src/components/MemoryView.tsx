@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Sidebar from "@/components/Sidebar";
-import { Brain, Plus, Edit2, ShieldCheck, Cpu, ArrowRight } from "lucide-react";
+import { Brain, Plus, ShieldCheck, Cpu } from "lucide-react";
 
 export default function MemoryView() {
   const [memories, setMemories] = useState([
@@ -59,24 +59,24 @@ export default function MemoryView() {
   };
 
   return (
-    <div className="flex min-h-screen bg-background text-on-background">
+    <div className="flex min-h-screen bg-background text-on-background font-body">
       <Sidebar />
 
-      <main className="flex-1 ml-64 p-8 md:p-12 pb-24 min-h-screen">
+      <main className="flex-1 ml-0 lg:ml-64 pt-20 lg:pt-12 p-4 sm:p-8 md:p-12 pb-24 min-h-screen">
         {/* Header */}
-        <header className="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
+        <header className="flex flex-col sm:flex-row sm:items-center justify-between mb-8 gap-4">
           <div>
             <div className="flex items-center gap-2 text-primary font-bold text-xs uppercase tracking-wider mb-1">
               <Brain className="w-4 h-4" />
-              <span>Vector Vector Memory Index</span>
+              <span>Vector Memory Index</span>
             </div>
-            <h1 className="font-display text-3xl font-bold text-on-surface">
+            <h1 className="font-display text-2xl sm:text-3xl font-bold text-on-surface">
               Brain Memory & Knowledge Graph
             </h1>
           </div>
           <button
             onClick={() => setShowAddModal(true)}
-            className="flex items-center gap-2 px-5 py-2.5 bg-primary text-on-primary rounded-xl font-semibold text-xs hover:opacity-90 transition-all shadow-xs"
+            className="flex items-center justify-center gap-2 px-5 py-2.5 bg-primary text-on-primary rounded-xl font-semibold text-xs hover:opacity-90 transition-all shadow-xs"
           >
             <Plus className="w-4 h-4" />
             <span>Add Memory Vector</span>
@@ -84,31 +84,31 @@ export default function MemoryView() {
         </header>
 
         {/* Stats Banner */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          <div className="desert-stone-card p-6 rounded-2xl flex items-center gap-4">
-            <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
-              <Cpu className="w-6 h-6" />
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 mb-8">
+          <div className="desert-stone-card p-5 sm:p-6 rounded-2xl flex items-center gap-4">
+            <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary shrink-0">
+              <Cpu className="w-5 h-5 sm:w-6 sm:h-6" />
             </div>
             <div>
-              <p className="text-2xl font-display font-bold text-on-surface">1,030 Tokens</p>
+              <p className="text-xl sm:text-2xl font-display font-bold text-on-surface">1,030 Tokens</p>
               <p className="text-xs text-on-surface-variant">Active Brain Memory Index</p>
             </div>
           </div>
-          <div className="desert-stone-card p-6 rounded-2xl flex items-center gap-4">
-            <div className="w-12 h-12 rounded-xl bg-tertiary/10 flex items-center justify-center text-tertiary">
-              <ShieldCheck className="w-6 h-6" />
+          <div className="desert-stone-card p-5 sm:p-6 rounded-2xl flex items-center gap-4">
+            <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-tertiary/10 flex items-center justify-center text-tertiary shrink-0">
+              <ShieldCheck className="w-5 h-5 sm:w-6 sm:h-6" />
             </div>
             <div>
-              <p className="text-2xl font-display font-bold text-on-surface">100% Vectorized</p>
+              <p className="text-xl sm:text-2xl font-display font-bold text-on-surface">100% Vectorized</p>
               <p className="text-xs text-on-surface-variant">Semantic Recall Active</p>
             </div>
           </div>
-          <div className="desert-stone-card p-6 rounded-2xl flex items-center gap-4">
-            <div className="w-12 h-12 rounded-xl bg-secondary/10 flex items-center justify-center text-secondary">
-              <Brain className="w-6 h-6" />
+          <div className="desert-stone-card p-5 sm:p-6 rounded-2xl flex items-center gap-4">
+            <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-secondary/10 flex items-center justify-center text-secondary shrink-0">
+              <Brain className="w-5 h-5 sm:w-6 sm:h-6" />
             </div>
             <div>
-              <p className="text-2xl font-display font-bold text-on-surface">3 Models</p>
+              <p className="text-xl sm:text-2xl font-display font-bold text-on-surface">3 Models</p>
               <p className="text-xs text-on-surface-variant">Synced with Gemini & Stitch</p>
             </div>
           </div>
