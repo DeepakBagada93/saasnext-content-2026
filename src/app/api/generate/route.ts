@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
   try {
-    const { prompt, action, context } = await req.json();
+    const { prompt, action, context, model } = await req.json();
     const apiKey = process.env.OPENROUTER_API_KEY;
 
     if (!apiKey) {
@@ -13,11 +13,14 @@ export async function POST(req: Request) {
     }
 
     const systemPrompt = `You are Content Brain, an AI assistant for high-impact knowledge work and editorial content creation. Tone: Sophisticated, grounded, contemplative, and authoritative.
-Context: ${context || "Brand Style: Tactile Digital Sanctuary, Warm-tonal."}`;
+Context rules: ${context || "Brand Style: Tactile Digital Sanctuary, Warm-tonal."}`;
 
     const userContent = action
-      ? `Action: ${action}\n\nTask: ${prompt}`
+      ? `Action: ${action}\n\nTask/Draft Context:\n${prompt}`
       : prompt;
+
+    // Use selected model or default to high-reliability OpenRouter model
+    const targetModel = model || "openai/gpt-4o-mini";
 
     const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
       method: "POST",
@@ -28,7 +31,7 @@ Context: ${context || "Brand Style: Tactile Digital Sanctuary, Warm-tonal."}`;
         "X-Title": "Content Brain SaaS",
       },
       body: JSON.stringify({
-        model: "google/gemini-2.5-flash",
+        model: targetModel,
         messages: [
           { role: "system", content: systemPrompt },
           { role: "user", content: userContent },
@@ -40,7 +43,7 @@ Context: ${context || "Brand Style: Tactile Digital Sanctuary, Warm-tonal."}`;
     if (!response.ok) {
       const errText = await response.text();
       return NextResponse.json(
-        { error: `OpenRouter error: ${errText}` },
+        { error: `OpenRouter API error (${response.status}): ${errText}` },
         { status: response.status }
       );
     }
@@ -48,8 +51,15 @@ Context: ${context || "Brand Style: Tactile Digital Sanctuary, Warm-tonal."}`;
     const data = await response.json();
     const resultText = data.choices?.[0]?.message?.content || "No output generated.";
 
-    return NextResponse.json({ result: resultText });
+    return NextResponse.json({
+      result: resultText,
+      model: data.model || targetModel,
+      usage: data.usage,
+    });
   } catch (error: any) {
-    return NextResponse.json({ error: error.message || "Failed to generate AI content" }, { status: 500 });
+    return NextResponse.json(
+      { error: error.message || "Failed to generate AI content" },
+      { status: 500 }
+    );
   }
 }
